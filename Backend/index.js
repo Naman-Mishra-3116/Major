@@ -3,6 +3,7 @@ import { config } from "dotenv";
 import bodyParser from "body-parser";
 import cors from "cors";
 import { connectToDatabase } from "./database/connectDb.js";
+import { AuthRouter } from "./route/authRouter.js";
 
 config();
 
@@ -16,6 +17,16 @@ app.use(bodyParser.json());
 app.get("/", (req, res) => {
   res.send("Hello from Server");
 });
+
+
+/**
+ * @AuthRouter for handling incoming authenticaiton request.
+ */
+app.use(AuthRouter);
+
+
+
+
 
 app.listen(PORT, () => {
   console.log(`Application is running on the port ${PORT}`);
