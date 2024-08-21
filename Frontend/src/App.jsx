@@ -3,13 +3,40 @@ import { ToastContainer } from "react-toastify";
 import Signup from "./Pages/Signup";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
+import { createBrowserRouter } from "react-router-dom";
+import { RouterProvider } from "react-router-dom";
+import RootWelcome from "./Pages/RootWelcome";
+import Home from "./Pages/Home";
 
 function App() {
-  console.log("hello world");
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <RootWelcome />,
+      children: [
+        {
+          path: "/",
+          index: true,
+          element: <Home />,
+        },
+        {
+          path: "/login",
+          element: <Login />,
+        },
+        {
+          path: "/signup",
+          element: <Signup />,
+        },
+        {
+          path: "/about",
+          element: <Home />,
+        },
+      ],
+    },
+  ]);
   return (
     <div>
-      {/* <Login /> */}
-      <Signup/>
+      <RouterProvider router={router} />
       <ToastContainer
         position="top-left"
         pauseOnFocusLoss={false}
@@ -21,7 +48,7 @@ function App() {
         theme="colored"
       />
     </div>
-  )
+  );
 }
 
 export default App;

@@ -1,10 +1,14 @@
 import React from "react";
-// import { NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import styles from "../Styles/login.module.css";
 const Login = () => {
   return (
-    <div className={`flex flex-col items-center justify-center h-[865px] ${styles.login}`}>
-      <div className={`flex w-[950px] h-[600px] rounded-lg justify-between bg-[#72a399] ${styles.login_shadow}`}>
+    <div
+      className={`flex flex-col items-center justify-center h-screen ${styles.login}`}
+    >
+      <div
+        className={`flex w-[950px] h-[600px] rounded-lg justify-between bg-[#72a399] ${styles.login_shadow}`}
+      >
         <div className="bg-[#72a399] w-[45%] flex items-center justify-center rounded-lg"></div>
         <div className="flex flex-col pl-[35px] justify-center bg-gray-200 rounded-tr-lg rounded-br-lg items-start flex-grow">
           <h1 className="text-[60px] font-bold text-[#3c6b5f] mb-10 ml-2">
@@ -48,13 +52,11 @@ const Login = () => {
 
           <div className="flex justify-between ml-2 w-[80%] mt-2 text-gray-500">
             <p>Don't have an account?</p>
-            {/* <NavLink to={"/"}>Sign Up</NavLink> */}
-            <a href="#">Sign Up</a>
+            <NavLink to={"/signup"}>Sign Up</NavLink>
           </div>
           <div className="flex justify-between ml-2 w-[80%] mt-2 text-gray-500">
             <p>Forgot Your Password?</p>
-            {/* <NavLink to="#">Sign Up</NavLink> */}
-            <a href="#">Reset Your Password</a>
+            <NavLink to="/login">Reset Password</NavLink>
           </div>
         </div>
       </div>

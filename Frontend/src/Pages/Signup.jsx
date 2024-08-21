@@ -1,10 +1,11 @@
 import React from "react";
 import styles from "../Styles/signup.module.css";
+import { NavLink } from "react-router-dom";
 
 const Signup = () => {
   return (
     <div
-      className={`flex flex-col items-center justify-center h-[865px] ${styles.signup}`}
+      className={`flex flex-col items-center justify-center h-screen w-screen z-10 ${styles.signup}`}
     >
       <div
         className={`flex w-[950px] h-[600px] rounded-lg justify-between bg-[#b1797aad] ${styles.signup_shadow}`}
@@ -68,8 +69,15 @@ const Signup = () => {
 
           <div className="flex justify-between ml-2 w-[80%] mt-2 text-gray-500">
             <p>Already have an account?</p>
-            {/* <NavLink to={"/"}>Sign Up</NavLink> */}
-            <a href="#">Login</a>
+            <NavLink
+              to={"/login"}
+              end
+              className={({ isActive }) => {
+                return isActive ? "bg-black" : "hover:text-black";
+              }}
+            >
+              Login
+            </NavLink>
           </div>
         </div>
       </div>
