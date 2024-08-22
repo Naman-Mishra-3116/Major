@@ -1,20 +1,4 @@
-- Create a backend server along with the Models Controllers Database Routes architecture
-- install all the required packages
-- test the devlopment server
-- connect to mongodb database
-- initialze .env file in both frontend and backend
-- Allow collaborators.
-- Create User Model 
-- Develop all api related to User Model.
 
-- Backend Packages:
-express
-jwt 
-joi
-mongoose
-dotenv
-cors
-body-parser
 
 
 

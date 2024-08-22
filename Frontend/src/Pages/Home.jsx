@@ -3,10 +3,8 @@ import { theme } from "../Utils/homeVideoArray";
 
 const Home = () => {
   const [active, setActive] = useState(0);
-  console.log(theme[active].video);
   return (
     <div className="relative h-screen">
- 
       <video
         src={theme[active].video}
         autoPlay
@@ -17,7 +15,6 @@ const Home = () => {
 
       <div className="absolute top-0 left-0 h-full w-full bg-black opacity-40 z-10"></div>
       <div className="absolute top-0 left-0 h-full w-full bg-black opacity-60 z-10"></div>
-
 
       <div className="absolute z-20 p-20 mt-4 ml-20">
         <div className="w-full p-5 flex flex-col gap-2 text-white text-left">
@@ -31,7 +28,9 @@ const Home = () => {
           {theme.map((_, index) => {
             return (
               <div
-                className="w-3 h-3 rounded-full bg-white hover:bg-white cursor-pointer transition-transform duration-300 transform hover:scale-150"
+                className={`w-3 h-3 rounded-full bg-white hover:bg-white cursor-pointer transition-transform duration-300 transform hover:scale-150 ${
+                  index === active ? "bg-red-800" : null
+                }`}
                 key={index}
                 onClick={() => {
                   setActive(index);
