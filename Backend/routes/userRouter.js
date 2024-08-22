@@ -10,6 +10,7 @@ import {
   singupController,
   loginController,
   renewAccessToken,
+  getLoggedInUserInfo,
 } from "../controllers/userController.js";
 
 const router = Router();
@@ -22,6 +23,7 @@ router
   .route("/auth/signup")
   .post(validateEmail, validatePassword, validateUsername, singupController);
 
+router.route("/auth/getInfo").get(getLoggedInUserInfo);
 router.route("/auth/test").get(verifyAuthenticated, (_, res) => {
   res.status(200).json({
     message: "hello from protected router",

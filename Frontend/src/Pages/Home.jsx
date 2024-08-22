@@ -1,8 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { theme } from "../Utils/homeVideoArray";
+import { useTokenHook } from "../Hooks/useTokenHook";
 
 const Home = () => {
+
   const [active, setActive] = useState(0);
+  useTokenHook();
+
   return (
     <div className="relative h-screen">
       <video
@@ -29,7 +33,7 @@ const Home = () => {
             return (
               <div
                 className={`w-3 h-3 rounded-full bg-white hover:bg-white cursor-pointer transition-transform duration-300 transform hover:scale-150 ${
-                  index === active ? "bg-red-800" : null
+                  index === active ? "bg-red-700" : null
                 }`}
                 key={index}
                 onClick={() => {

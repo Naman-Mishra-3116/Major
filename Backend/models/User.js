@@ -41,7 +41,7 @@ userSchema.methods.generateAccessToken = function () {
         username: this.username,
       },
       process.env.ACCESS_TOKEN_SECRET,
-      { expiresIn: "1d" }
+      { expiresIn: "1m" }
     );
     return accessToken;
   } catch (err) {
@@ -57,7 +57,7 @@ userSchema.methods.generateRefreshToken = function () {
         id: this._id,
       },
       process.env.REFRESH_TOKEN_SECRET,
-      { expiresIn: "10d" }
+      { expiresIn: "5m" }
     );
     return refreshToken;
   } catch (err) {

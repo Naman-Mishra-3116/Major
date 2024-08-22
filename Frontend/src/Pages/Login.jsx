@@ -6,10 +6,13 @@ import { useState } from "react";
 import axios from "axios";
 import HashLoader from "react-spinners/HashLoader";
 import { createToast } from "./../Utils/createToast";
+import { useDispatch } from "react-redux";
+import { setAllData } from "../Store/authSlice";
 axios.defaults.withCredentials = true;
 
 const Login = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
@@ -35,12 +38,20 @@ const Login = () => {
       );
       const { message } = resp.data;
       createToast(message, "success");
-      setTimeout(()=>{
-        navigate("/");
-      },2000);
+      console.log(resp.data.data);
+      dispatch(
+        setAllData({
+          accessToken: resp.data.data.accessToken,
+          refreshToken: resp.data.data.refreshToken,
+          name: resp.data.data.username,
+          email: resp.data.data.email,
+          id: resp.data.data.id,
+          isLoggedIn: true,
+        })
+      );
+      navigate("/");
     } catch (error) {
       setLoading(false);
-      console.log(error.response.data.message);
       createToast(error.response.data.message, "error");
     }
   };

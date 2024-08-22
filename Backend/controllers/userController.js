@@ -1,6 +1,6 @@
 import { User } from "../models/User.js";
 import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken"
+import jwt from "jsonwebtoken";
 const cookieOptionsForRefresh = {
   httpOnly: true,
   secure: true,
@@ -70,10 +70,11 @@ export const renewAccessToken = async function (req, res) {
 
     const { id } = jwt.verify(refreshtoken, process.env.REFRESH_TOKEN_SECRET);
     if (!id) {
-      return res.status(401).json({
+      return res.status(200).json({
         message: "Token expired",
         error: true,
         success: false,
+        requestRefreshToken: true,
       });
     }
 
@@ -89,19 +90,32 @@ export const renewAccessToken = async function (req, res) {
     const newAccessToken = user.generateAccessToken();
     res
       .status(200)
-      .cookie("newAccessToken", newAccessToken, cookieOptionsForAccess)
+      .cookie("accessToken", newAccessToken, cookieOptionsForAccess)
       .json({
         message: "Created",
         success: true,
         error: false,
+        data: {
+          id: user.id,
+          username: user.username,
+          email: user.email,
+        },
       });
-
   } catch (err) {
-    res.status(400).json({
-      message: err.message,
-      success: false,
-      error: true,
-    });
+    if (err.message === "jwt expired") {
+      res.status(200).json({
+        message: "refresh token expired",
+        success: false,
+        error: true,
+        requestRefreshToken:true
+      });
+    } else {
+      res.status(400).json({
+        message: err.message,
+        success: false,
+        error: true,
+      });
+    }
   }
 };
 
@@ -130,6 +144,7 @@ export const loginController = async function (req, res) {
       .status(200)
       .cookie("refreshtoken", refreshToken, cookieOptionsForRefresh)
       .cookie("accesstoken", accessToken, cookieOptionsForAccess)
+      .cookie("id", loggedInUser._id, cookieOptionsForRefresh)
       .json({
         message: "Logged in successfully",
         success: true,
@@ -147,6 +162,52 @@ export const loginController = async function (req, res) {
       message: err.message,
       success: false,
       error: true,
+    });
+  }
+};
+
+export const getLoggedInUserInfo = async function (req, res) {
+  try {
+    const accessToken = req.cookies.accesstoken;
+    if (!accessToken) {
+      throw new Error("No Access Token");
+    }
+
+    const { id } = jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET);
+
+    if (!id) {
+      return res.status(200).json({
+        message: "Access token Expired",
+        success: false,
+        error: true,
+        requestToken: true,
+      });
+    }
+
+    const loggedInUser = await User.findById(id).select(
+      "-password -refreshToken"
+    );
+
+    if (!loggedInUser) {
+      throw new Error("Invalid Access token");
+    }
+
+    res.status(200).json({
+      message: "Data delivered Successfully",
+      error: false,
+      success: true,
+      data: {
+        username: loggedInUser.username,
+        id: loggedInUser._id,
+        email: loggedInUser.email,
+      },
+    });
+  } catch (error) {
+    res.status(400).json({
+      message: error.message,
+      success: false,
+      error: true,
+      test: "here i am",
     });
   }
 };

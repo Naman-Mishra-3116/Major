@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styles from "../Styles/signup.module.css";
 import { NavLink } from "react-router-dom";
 import { useState } from "react";
@@ -120,7 +120,7 @@ const Signup = () => {
                 type="submit"
                 className=" text-white bg-[#964143ad] px-8 py-2 ml-2 hover:bg-[#f77b7dad] rounded-full mt-3 mb-3"
               >
-                {loading ? <HashLoader color="white" size={25} /> : "Login"}
+                {loading ? <HashLoader color="white" size={25} /> : "Signup"}
               </button>
             </div>
           </form>
